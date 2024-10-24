@@ -1,9 +1,12 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Activity, Settings, User, LogIn } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Activity, Settings, User, LogIn, Mail, Home } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
+  const location = useLocation();
+  const isAuthenticated = false; // This should be replaced with actual auth state
+
   return (
     <header className="bg-white shadow-md">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -19,25 +22,46 @@ const Header = () => {
         <nav>
           <ul className="flex space-x-4">
             <li>
-              <Button variant="ghost">
-                <User className="h-5 w-5 mr-2" />
-                Profile
-              </Button>
-            </li>
-            <li>
-              <Button variant="ghost">
-                <Settings className="h-5 w-5 mr-2" />
-                Settings
-              </Button>
-            </li>
-            <li>
-              <Link to="/auth">
-                <Button variant="default">
-                  <LogIn className="h-5 w-5 mr-2" />
-                  Sign In
+              <Link to="/">
+                <Button variant="ghost">
+                  <Home className="h-5 w-5 mr-2" />
+                  Home
                 </Button>
               </Link>
             </li>
+            <li>
+              <Link to="/contact">
+                <Button variant="ghost">
+                  <Mail className="h-5 w-5 mr-2" />
+                  Contact
+                </Button>
+              </Link>
+            </li>
+            {isAuthenticated ? (
+              <>
+                <li>
+                  <Button variant="ghost">
+                    <User className="h-5 w-5 mr-2" />
+                    Profile
+                  </Button>
+                </li>
+                <li>
+                  <Button variant="ghost">
+                    <Settings className="h-5 w-5 mr-2" />
+                    Settings
+                  </Button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link to="/auth">
+                  <Button variant="default">
+                    <LogIn className="h-5 w-5 mr-2" />
+                    Sign In
+                  </Button>
+                </Link>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
